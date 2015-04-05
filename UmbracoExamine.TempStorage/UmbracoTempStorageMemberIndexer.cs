@@ -32,14 +32,10 @@ namespace UmbracoExamine.TempStorage
 
             return _helper.LuceneDirectory;
         }
-        
-        public override IndexWriter GetIndexWriter()
+
+        protected override IndexWriter CreateIndexWriter()
         {
-            return new IndexWriter(GetLuceneDirectory(), IndexingAnalyzer, 
-                //create the writer with the snapshotter, though that won't make too much a difference because we are not keeping the writer open unless using nrt
-                // which we are not currently.
-                _helper.Snapshotter, 
-                IndexWriter.MaxFieldLength.UNLIMITED);
+            return new IndexWriter(GetLuceneDirectory(), IndexingAnalyzer, false, IndexWriter.MaxFieldLength.UNLIMITED);
         }
     }
 }
